@@ -371,6 +371,8 @@ function startGame() {
     clearAllActivations();
     pauseBtn.disabled = false;
     pauseBtn.textContent = "Pause";
+    pauseBtn.classList.remove("control-btn--resume");
+    pauseBtn.classList.add("control-btn--pause");
     setStatus("Game on! Tap reds, dodge blues.");
     scheduleNextActivation();
 }
@@ -386,9 +388,13 @@ function togglePauseGame() {
         }
         clearAllActivations();
         pauseBtn.textContent = "Resume";
+        pauseBtn.classList.remove("control-btn--pause");
+        pauseBtn.classList.add("control-btn--resume");
         setStatus("Paused. Press resume when ready.", "neutral");
     } else {
         pauseBtn.textContent = "Pause";
+        pauseBtn.classList.remove("control-btn--resume");
+        pauseBtn.classList.add("control-btn--pause");
         setStatus("Back in the action!", "positive");
         scheduleNextActivation();
     }
@@ -411,6 +417,8 @@ function resetGame() {
     setStatus("Click red, avoid blue!");
     pauseBtn.disabled = true;
     pauseBtn.textContent = "Pause";
+    pauseBtn.classList.remove("control-btn--resume");
+    pauseBtn.classList.add("control-btn--pause");
 }
 
 startBtn.addEventListener("click", startGame);

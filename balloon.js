@@ -190,6 +190,8 @@ function startGame() {
     gamePaused = false;
     pauseBtn.disabled = false;
     pauseBtn.textContent = "Pause";
+    pauseBtn.classList.remove("control-btn--resume");
+    pauseBtn.classList.add("control-btn--pause");
     roundCount = 0;
     score = 0;
     scoreValueEl.textContent = score;
@@ -212,6 +214,8 @@ function togglePause() {
 
     if (gamePaused) {
         pauseBtn.textContent = "Resume";
+        pauseBtn.classList.remove("control-btn--pause");
+        pauseBtn.classList.add("control-btn--resume");
         if (spawnTimeoutId) {
             clearTimeout(spawnTimeoutId);
             spawnTimeoutId = null;
@@ -222,6 +226,8 @@ function togglePause() {
     });
     } else {
         pauseBtn.textContent = "Pause";
+        pauseBtn.classList.remove("control-btn--resume");
+        pauseBtn.classList.add("control-btn--pause");
         activeBalloons.forEach((balloonInfo, balloonId) => {
             const timeoutId = setTimeout(() => {
                 if (!activeBalloons.has(balloonId)) {
@@ -250,6 +256,8 @@ function resetGame() {
     resetScoreFlash();
     pauseBtn.textContent = "Pause";
     pauseBtn.disabled = true;
+    pauseBtn.classList.remove("control-btn--resume");
+    pauseBtn.classList.add("control-btn--pause");
     updatePlayfieldSize();
 }
 
