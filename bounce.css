@@ -9,6 +9,9 @@
   --text: #f7f7fb;
   --link: #b8c1ec;
   --ball-radius: 24px;
+  --hud-height: 140px;
+  --playfield-height: calc(100vh - var(--hud-height));
+  --playfield-width: 100vw;
 }
 
 * {
@@ -153,8 +156,8 @@ h1 {
 .playfield {
   position: relative;
   flex: 1 1 auto;
-  width: 100vw;
-  height: calc(100vh - 72px);
+  width: var(--playfield-width, 100vw);
+  height: var(--playfield-height, calc(100vh - 140px));
   overflow: hidden;
 }
 

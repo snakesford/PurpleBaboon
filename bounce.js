@@ -1,14 +1,16 @@
+const root = document.documentElement;
 const playfield = document.getElementById("playfield");
 const startBtn = document.getElementById("startBtn");
 const pauseBtn = document.getElementById("pauseBtn");
 const resetBtn = document.getElementById("resetBtn");
 const scoreValueEl = document.getElementById("scoreValue");
+const hud = document.querySelector(".hud");
 
 const INITIAL_BALLS = 4;
 const BALL_INCREMENT_INTERVAL = 6000;
 const MAX_BALLS = 30;
-const MIN_SPEED = 120;
-const MAX_SPEED = 200;
+const MIN_SPEED = 110;
+const MAX_SPEED = 180;
 const CLICK_SCORE = 1;
 
 let animationFrameId = null;
@@ -19,8 +21,16 @@ let score = 0;
 let incrementTimeout = null;
 let lastTimestamp = null;
 
-if (!playfield || !startBtn || !pauseBtn || !resetBtn || !scoreValueEl) {
+if (!root || !playfield || !startBtn || !pauseBtn || !resetBtn || !scoreValueEl || !hud) {
     throw new Error("Hyper Bounce: required DOM elements are missing.");
+}
+
+function updateLayoutMetrics() {
+    const hudHeight = hud.offsetHeight;
+    root.style.setProperty("--hud-height", `${hudHeight}px`);
+    const playfieldHeight = Math.max(window.innerHeight - hudHeight, 260);
+    root.style.setProperty("--playfield-height", `${playfieldHeight}px`);
+    root.style.setProperty("--playfield-width", `${window.innerWidth}px`);
 }
 
 function randomBetween(min, max) {
@@ -35,7 +45,7 @@ function createBall(index) {
     playfield.appendChild(ball);
 
     const bounds = playfield.getBoundingClientRect();
-    const size = ball.offsetWidth || 48;
+    const size = ball.offsetWidth || 56;
 
     const position = {
         x: randomBetween(0, Math.max(bounds.width - size, 0)),
@@ -152,6 +162,8 @@ function startGame() {
         return;
     }
 
+    updateLayoutMetrics();
+
     if (balls.length === 0) {
         initializeBalls();
     }
@@ -214,6 +226,7 @@ function togglePauseGame() {
 function resetGame() {
     gameActive = false;
     gamePaused = false;
+    updateLayoutMetrics();
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
         animationFrameId = null;
@@ -238,17 +251,6 @@ startBtn.addEventListener("click", startGame);
 pauseBtn.addEventListener("click", togglePauseGame);
 resetBtn.addEventListener("click", resetGame);
 
-window.addEventListener("resize", () => {
-    balls.forEach((ball) => {
-        const bounds = playfield.getBoundingClientRect();
-        const maxX = Math.max(bounds.width - ball.size, 0);
-        const maxY = Math.max(bounds.height - ball.size, 0);
-        ball.position.x = clampPosition(ball.position.x, 0, maxX);
-        ball.position.y = clampPosition(ball.position.y, 0, maxY);
-        ball.element.style.transform = `translate(${ball.position.x}px, ${ball.position.y}px)`;
-    });
-});
-
 function handleBallClick(ball) {
     if (!gameActive || gamePaused) {
         return;
@@ -270,6 +272,19 @@ function handleBallClick(ball) {
     balls = balls.filter((existing) => existing.id !== ball.id);
     scheduleBallIncrement(true);
 }
+
+updateLayoutMetrics();
+window.addEventListener("resize", () => {
+    updateLayoutMetrics();
+    balls.forEach((ball) => {
+        const bounds = playfield.getBoundingClientRect();
+        const maxX = Math.max(bounds.width - ball.size, 0);
+        const maxY = Math.max(bounds.height - ball.size, 0);
+        ball.position.x = clampPosition(ball.position.x, 0, maxX);
+        ball.position.y = clampPosition(ball.position.y, 0, maxY);
+        ball.element.style.transform = `translate(${ball.position.x}px, ${ball.position.y}px)`;
+    });
+});
 
 resetGame();
 

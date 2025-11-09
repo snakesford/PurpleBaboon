@@ -7,32 +7,38 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <div class="alt-links alt-links--top">
-      <a class="alt-game-link" href="balloon.html">Play Balloon Dash</a>
-      <a class="alt-game-link" href="bounce.html">Play Hyper Bounce</a>
-    </div>
-    <h1>Purple Baboon</h1>
-    <div class="scoreboard">
-      <div class="status" id="status">Click red, avoid blue!</div>
-      <div class="score" id="score">0</div>
-      <div class="difficulty-controls" role="group" aria-label="Select difficulty">
-        <button class="difficulty-btn is-active" type="button" data-difficulty="easy">
-          Easy
-        </button>
-        <button class="difficulty-btn" type="button" data-difficulty="medium">
-          Medium
-        </button>
-        <button class="difficulty-btn" type="button" data-difficulty="hard">
-          Hard
-        </button>
+    <header class="top-nav">
+      <h1>Purple Baboon</h1>
+      <nav class="nav-links" aria-label="Other games">
+        <a class="alt-game-link" href="balloon.html">Play Balloon Dash</a>
+        <a class="alt-game-link" href="bounce.html">Play Hyper Bounce</a>
+      </nav>
+    </header>
+    <main class="game-layout">
+      <div class="scoreboard">
+        <div class="status" id="status">Click red, avoid blue!</div>
+        <div class="score" id="score">0</div>
+        <div class="difficulty-controls" role="group" aria-label="Select difficulty">
+          <button class="difficulty-btn is-active" type="button" data-difficulty="easy">
+            Easy
+          </button>
+          <button class="difficulty-btn" type="button" data-difficulty="medium">
+            Medium
+          </button>
+          <button class="difficulty-btn" type="button" data-difficulty="hard">
+            Hard
+          </button>
+        </div>
+        <div class="controls">
+          <button id="startBtn" class="control-btn control-btn--start">Start</button>
+          <button id="pauseBtn" class="control-btn control-btn--pause" disabled>Pause</button>
+          <button id="resetBtn" class="control-btn control-btn--reset">Reset</button>
+        </div>
       </div>
-      <div class="controls">
-        <button id="startBtn" class="control-btn control-btn--start">Start</button>
-        <button id="pauseBtn" class="control-btn control-btn--pause" disabled>Pause</button>
-        <button id="resetBtn" class="control-btn control-btn--reset">Reset</button>
+      <div class="playfield-wrapper">
+        <div class="grid" id="grid"></div>
       </div>
-    </div>
-    <div class="grid" id="grid"></div>
+    </main>
 
     <script type="text/javascript" src="script.js"></script>
   </body>
