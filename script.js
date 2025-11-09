@@ -14,6 +14,7 @@ const SPEEDUP_INTERVAL = 5;
 const MAX_DIFFICULTY_STAGE = 10;
 
 const BLUE_CHANCE = 0.35;
+const RED_GRACE_DURATION = 200;
 
 const DIFFICULTY_SETTINGS = {
     easy: {
@@ -121,8 +122,11 @@ function setStatus(message, tone = "neutral") {
 function clearTileActivation(tile) {
     if (!activeTiles.has(tile)) return;
 
-    const { timeoutId } = activeTiles.get(tile);
+    const { timeoutId, graceTimeoutId } = activeTiles.get(tile);
     clearTimeout(timeoutId);
+    if (graceTimeoutId) {
+        clearTimeout(graceTimeoutId);
+    }
     tile.dataset.state = "idle";
     tile.classList.remove("active-red", "active-blue");
     activeTiles.delete(tile);
@@ -168,7 +172,7 @@ function handleTileClick(tile) {
 
     const state = tile.dataset.state;
 
-    if (state === "red") {
+    if (state === "red" || state === "red-grace") {
         updateScore(1);
         setStatus("Nice! You caught the red.", "positive");
         clearTileActivation(tile);
@@ -181,12 +185,51 @@ function handleTileClick(tile) {
     }
 }
 
+function getConcurrentActiveCount() {
+    return Array.from(activeTiles.values()).reduce((count, info) => {
+        return info.state === "red-grace" ? count : count + 1;
+    }, 0);
+}
+
+function beginRedGrace(tile) {
+    const info = activeTiles.get(tile);
+    if (!info || info.state !== "red") {
+        return;
+    }
+
+    info.timeoutId = null;
+    tile.dataset.state = "red-grace";
+
+    const graceTimeoutId = setTimeout(() => {
+        const currentInfo = activeTiles.get(tile);
+        if (!currentInfo || tile.dataset.state !== "red-grace") {
+            return;
+        }
+        updateScore(-1);
+        setStatus("Missed a red!", "negative");
+        clearTileActivation(tile);
+        if (gameActive && !gamePaused) {
+            scheduleNextActivation();
+        }
+    }, RED_GRACE_DURATION);
+
+    activeTiles.set(tile, {
+        ...info,
+        state: "red-grace",
+        graceTimeoutId,
+    });
+
+    if (gameActive && !gamePaused) {
+        scheduleNextActivation();
+    }
+}
+
 function activateTile() {
     if (!gameActive || gamePaused) {
         return;
     }
 
-    if (activeTiles.size >= getDifficultyConfig().maxConcurrent) {
+    if (getConcurrentActiveCount() >= getDifficultyConfig().maxConcurrent) {
         scheduleNextActivation();
         return;
     }
@@ -207,14 +250,17 @@ function activateTile() {
 
     const activeDuration = getActiveDuration();
     const timeoutId = setTimeout(() => {
+        const info = activeTiles.get(tile);
+        if (!info || info.state !== newState) {
+            return;
+        }
+        if (newState === "red") {
+            beginRedGrace(tile);
+            return;
+        }
         if (tile.dataset.state === newState) {
-            if (newState === "red") {
-                updateScore(-1);
-                setStatus("Missed a red!", "negative");
-            } else {
-                updateScore(1);
-                setStatus("Good job avoiding blue.", "positive");
-            }
+            updateScore(1);
+            setStatus("Good job avoiding blue.", "positive");
             clearTileActivation(tile);
             if (gameActive && !gamePaused) {
                 scheduleNextActivation();
@@ -222,7 +268,7 @@ function activateTile() {
         }
     }, activeDuration);
 
-    activeTiles.set(tile, { timeoutId, state: newState });
+    activeTiles.set(tile, { timeoutId, state: newState, graceTimeoutId: null });
     if (gameActive && !gamePaused) {
         scheduleNextActivation();
     }
