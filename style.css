@@ -28,6 +28,57 @@
     color: var(--text);
   }
 
+  @media (max-width: 640px) {
+    body {
+      gap: 16px;
+      padding: 12px 10px 16px;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+
+    .scoreboard {
+      padding: 12px 16px;
+      gap: 6px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+
+    .score {
+      font-size: 2rem;
+    }
+
+    .status {
+      font-size: 0.9rem;
+    }
+
+    .difficulty-controls {
+      gap: 8px;
+    }
+
+    .difficulty-controls .difficulty-btn {
+      padding: 5px 12px;
+      font-size: 0.85rem;
+    }
+
+    .controls {
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .control-btn {
+      padding: 6px 14px;
+      font-size: 0.9rem;
+    }
+
+    .grid {
+      grid-template-columns: repeat(4, minmax(48px, 60px));
+      gap: 10px;
+    }
+  }
+
   h1 {
     margin: 0;
     font-size: 2rem;
@@ -191,9 +242,88 @@
     filter: brightness(0.95);
   }
 
-  .alt-game-link--top {
+  .alt-links {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .alt-links--top {
     margin-top: 12px;
     align-self: center;
+  }
+
+  @media (max-width: 520px) {
+    body {
+      padding: 16px 0;
+      gap: 16px;
+      justify-content: flex-start;
+      overflow: hidden;
+    }
+
+    h1 {
+      font-size: 1.65rem;
+      margin-top: 4px;
+    }
+
+    .scoreboard {
+      width: min(90vw, 320px);
+      padding: 12px 18px;
+      gap: 6px;
+    }
+
+    .score {
+      font-size: 2rem;
+    }
+
+    .status {
+      font-size: 0.9rem;
+      text-align: center;
+      min-height: 1.2rem;
+    }
+
+    .difficulty-controls {
+      width: 100%;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .difficulty-controls .difficulty-btn {
+      padding: 5px 10px;
+      font-size: 0.85rem;
+    }
+
+    .controls {
+      flex-direction: column;
+      gap: 10px;
+      width: 100%;
+    }
+
+    .controls .control-btn,
+    .controls .alt-game-link {
+      width: min(88vw, 300px);
+      justify-content: center;
+    }
+
+    .alt-links {
+      order: -1;
+      margin-bottom: 4px;
+    }
+
+    .alt-links--top {
+      margin-top: 6px;
+    }
+
+    .grid {
+      grid-template-columns: repeat(4, minmax(46px, 64px));
+      gap: 10px;
+    }
+
+    button.tile {
+      border-radius: 10px;
+    }
   }
 
   .control-btn--pause {
