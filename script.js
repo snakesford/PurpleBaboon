@@ -182,6 +182,9 @@ function handleTileClick(tile) {
         setStatus("Oops! Avoid the blue.", "negative");
         clearTileActivation(tile);
         scheduleNextActivation();
+    } else if (state === "idle") {
+        updateScore(-1);
+        setStatus("Careful! That one wasn't active.", "negative");
     }
 }
 
