@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Balloon Dash</title>
+    <link rel="stylesheet" type="text/css" href="balloon.css" />
+  </head>
+  <body>
+    <header class="hud">
+      <h1>Balloon Dash</h1>
+      <div class="scoreboard">
+        <span class="score-label">Score</span>
+        <span class="score-value" id="scoreValue">0</span>
+      </div>
+      <div class="controls">
+        <button type="button" id="startBtn">Start</button>
+        <button type="button" id="pauseBtn" disabled>Pause</button>
+        <button type="button" id="resetBtn">Reset</button>
+        <a class="alt-game-link" href="index.html">Play Purple Baboon</a>
+      </div>
+    </header>
+    <main class="game-wrapper">
+      <div class="playfield" id="playfield" aria-live="polite"></div>
+    </main>
+    <script type="text/javascript" src="balloon.js"></script>
+  </body>
+</html>
+

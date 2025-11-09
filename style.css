@@ -163,6 +163,36 @@
     filter: brightness(0.95);
   }
 
+  .alt-game-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: transparent;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 150ms ease, filter 150ms ease, background 150ms ease;
+  }
+
+  .alt-game-link:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+    background: rgba(127, 90, 240, 0.15);
+  }
+
+  .alt-game-link:active {
+    transform: translateY(1px);
+    filter: brightness(0.95);
+  }
+
+  .alt-game-link--top {
+    margin-top: 12px;
+    align-self: center;
+  }
+
   @keyframes scoreLossFlash {
     0% {
       transform: scale(1);
