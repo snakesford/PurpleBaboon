@@ -15,6 +15,7 @@ const MAX_DIFFICULTY_STAGE = 10;
 
 const BLUE_CHANCE = 0.2;
 const RED_GRACE_DURATION = 200;
+const SCORE_FLASH_DURATION = 500;
 
 const DIFFICULTY_SETTINGS = {
     easy: {
@@ -34,6 +35,7 @@ const DIFFICULTY_SETTINGS = {
     },
 };
 
+const scoreboardEl = document.querySelector(".scoreboard");
 const grid = document.getElementById("grid");
 const scoreEl = document.getElementById("score");
 const statusEl = document.getElementById("status");
@@ -49,6 +51,8 @@ let gamePaused = false;
 let pendingActivationTimeout = null;
 let currentDifficulty = "easy";
 const activeTiles = new Map();
+let lossEffectTimeout = null;
+let gainEffectTimeout = null;
 
 function setupGrid() {
     for (let i = 0; i < GRID_SIZE * GRID_SIZE; i += 1) {
@@ -103,6 +107,75 @@ function getDelayBounds() {
 function updateScore(delta) {
     score += delta;
     scoreEl.textContent = score;
+    if (delta < 0) {
+        triggerScoreLossEffect();
+    } else if (delta > 0) {
+        triggerScoreGainEffect();
+    }
+}
+
+function triggerScoreLossEffect() {
+    if (!scoreboardEl) {
+        return;
+    }
+
+    if (gainEffectTimeout) {
+        clearTimeout(gainEffectTimeout);
+        gainEffectTimeout = null;
+    }
+
+    if (lossEffectTimeout) {
+        clearTimeout(lossEffectTimeout);
+        lossEffectTimeout = null;
+    }
+
+    scoreEl.classList.remove("loss-flash");
+    scoreEl.classList.remove("gain-flash");
+    scoreboardEl.classList.remove("scoreboard-loss");
+    scoreboardEl.classList.remove("scoreboard-gain");
+    void scoreEl.offsetWidth;
+    void scoreboardEl.offsetWidth;
+
+    scoreEl.classList.add("loss-flash");
+    scoreboardEl.classList.add("scoreboard-loss");
+
+    lossEffectTimeout = setTimeout(() => {
+        scoreEl.classList.remove("loss-flash");
+        scoreboardEl.classList.remove("scoreboard-loss");
+        lossEffectTimeout = null;
+    }, SCORE_FLASH_DURATION);
+}
+
+function triggerScoreGainEffect() {
+    if (!scoreboardEl) {
+        return;
+    }
+
+    if (lossEffectTimeout) {
+        clearTimeout(lossEffectTimeout);
+        lossEffectTimeout = null;
+    }
+
+    if (gainEffectTimeout) {
+        clearTimeout(gainEffectTimeout);
+        gainEffectTimeout = null;
+    }
+
+    scoreEl.classList.remove("loss-flash");
+    scoreEl.classList.remove("gain-flash");
+    scoreboardEl.classList.remove("scoreboard-loss");
+    scoreboardEl.classList.remove("scoreboard-gain");
+    void scoreEl.offsetWidth;
+    void scoreboardEl.offsetWidth;
+
+    scoreEl.classList.add("gain-flash");
+    scoreboardEl.classList.add("scoreboard-gain");
+
+    gainEffectTimeout = setTimeout(() => {
+        scoreEl.classList.remove("gain-flash");
+        scoreboardEl.classList.remove("scoreboard-gain");
+        gainEffectTimeout = null;
+    }, SCORE_FLASH_DURATION);
 }
 
 function setStatus(message, tone = "neutral") {
