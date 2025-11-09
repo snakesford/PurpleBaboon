@@ -63,14 +63,17 @@
     }
 
     .controls {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 8px;
-      flex-wrap: wrap;
-      justify-content: center;
+      align-items: stretch;
+      width: 100%;
     }
 
-    .control-btn {
-      padding: 6px 14px;
-      font-size: 0.9rem;
+    .controls .control-btn {
+      padding: 6px 10px;
+      font-size: 0.85rem;
+      justify-content: center;
     }
 
     .grid {
@@ -205,6 +208,7 @@
     cursor: pointer;
     transition: transform 150ms ease, filter 150ms ease;
     box-shadow: 0 10px 18px rgb(127 90 240 / 0.3);
+    width: auto;
   }
 
   .control-btn:hover {
@@ -296,14 +300,16 @@
     }
 
     .controls {
-      flex-direction: column;
-      gap: 10px;
       width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
-    .controls .control-btn,
-    .controls .alt-game-link {
-      width: min(88vw, 300px);
+    .controls .control-btn {
+      padding: 6px 10px;
+      font-size: 0.85rem;
       justify-content: center;
     }
 
@@ -428,4 +434,5 @@
       transform: translateY(0);
       box-shadow: 0 20px 30px rgb(0 0 0 / 0.25);
     }
+  }
   }

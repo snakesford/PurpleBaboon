@@ -8,17 +8,19 @@
   </head>
   <body>
     <header class="hud">
+      <nav class="nav-links" aria-label="Other games">
+        <a class="alt-game-link" href="index.html">Play Purple Baboon</a>
+        <a class="alt-game-link" href="balloon.html">Play Balloon Dash</a>
+      </nav>
       <h1>Hyper Bounce</h1>
-      <div class="controls">
-        <div class="scoreboard">
-          <span class="score-label">Score</span>
-          <span class="score-value" id="scoreValue">0</span>
-        </div>
+      <div class="scoreboard">
+        <span class="score-label">Score</span>
+        <span class="score-value" id="scoreValue">0</span>
+      </div>
+      <div class="control-row">
         <button id="startBtn" class="control-btn control-btn--start">Start</button>
         <button id="pauseBtn" class="control-btn control-btn--pause" disabled>Pause</button>
         <button id="resetBtn" class="control-btn control-btn--reset" disabled>Reset</button>
-        <a class="alt-game-link" href="index.html">Play Purple Baboon</a>
-        <a class="alt-game-link" href="balloon.html">Play Balloon Dash</a>
       </div>
     </header>
     <main class="playfield" id="playfield" aria-live="polite"></main>

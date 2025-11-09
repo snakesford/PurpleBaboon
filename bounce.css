@@ -26,41 +26,17 @@ body {
   overflow: hidden;
 }
 
-.hud {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 14px clamp(16px, 4vw, 40px);
-  background: rgba(10, 10, 18, 0.85);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-  gap: 16px;
-}
-
-h1 {
-  margin: 0;
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
-  letter-spacing: 0.06em;
-}
-
-.controls {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
 .scoreboard {
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
+  justify-content: center;
   gap: 8px;
   padding: 6px 14px;
   border-radius: 999px;
   background: var(--panel);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+  align-self: center;
+  margin: 0 auto;
 }
 
 .score-label {
@@ -75,6 +51,41 @@ h1 {
   font-weight: 700;
 }
 
+.hud {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 16px clamp(16px, 5vw, 48px);
+  background: rgba(10, 10, 18, 0.88);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.nav-links {
+  display: inline-flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  letter-spacing: 0.06em;
+}
+
+.control-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
 .control-btn {
   padding: 8px 16px;
   border-radius: 999px;
@@ -86,6 +97,7 @@ h1 {
   cursor: pointer;
   transition: transform 150ms ease, filter 150ms ease, box-shadow 150ms ease;
   box-shadow: 0 10px 18px rgba(127, 90, 240, 0.3);
+  width: auto;
 }
 
 .control-btn:hover {
@@ -215,20 +227,38 @@ h1 {
     font-size: 1.6rem;
   }
 
-  .controls {
+  .nav-links {
     justify-content: center;
-    gap: 10px;
+    width: 100%;
+    gap: 8px;
   }
 
-  .control-btn,
-  .alt-game-link,
+  .control-row {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: nowrap;
+  }
+
+  .control-row .control-btn {
+    padding: 6px 10px;
+    font-size: 0.85rem;
+    justify-content: center;
+    box-shadow: 0 6px 12px rgba(127, 90, 240, 0.28);
+  }
+
   .scoreboard {
     width: min(92vw, 320px);
     justify-content: center;
   }
 
-  .scoreboard {
-    align-self: center;
+  .alt-game-link {
+    width: auto;
+    justify-content: center;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+    box-shadow: 0 6px 12px rgba(184, 193, 236, 0.28);
   }
 
   .playfield {
