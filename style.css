@@ -1,0 +1,148 @@
+:root {
+    color-scheme: light dark;
+    --bg: #16161a;
+    --panel: #242629;
+    --accent: #7f5af0;
+    --neutral: #72757e;
+    --red: #ef4565;
+    --blue: #2cb1bc;
+    --text: #fffffe;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 2rem;
+    letter-spacing: 0.05em;
+  }
+
+  .scoreboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px 24px;
+    border-radius: 16px;
+    background: var(--panel);
+    box-shadow: 0 20px 30px rgb(0 0 0 / 0.25);
+    gap: 8px;
+  }
+
+  .score {
+    font-size: 2.5rem;
+    font-weight: 600;
+  }
+
+  .status {
+    min-height: 1.5rem;
+    font-size: 1rem;
+    color: var(--neutral);
+  }
+  
+  .difficulty-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .difficulty-controls .difficulty-btn {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--neutral);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    font-weight: 500;
+    transition: transform 150ms ease, filter 150ms ease, background 150ms ease;
+  }
+
+  .difficulty-controls .difficulty-btn.is-active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--text);
+    box-shadow: 0 6px 12px rgb(127 90 240 / 0.35);
+  }
+
+  .difficulty-controls .difficulty-btn:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+
+  .difficulty-controls .difficulty-btn:active {
+    transform: translateY(1px);
+    filter: brightness(0.95);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(60px, 80px));
+    gap: 16px;
+  }
+
+  button.tile {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    border: none;
+    border-radius: 12px;
+    background: var(--neutral);
+    color: transparent;
+    transition: background 150ms linear, transform 150ms ease;
+    cursor: pointer;
+  }
+
+  button.tile.active-red {
+    background: var(--red);
+    transform: scale(1.05);
+  }
+
+  button.tile.active-blue {
+    background: var(--blue);
+    transform: scale(1.05);
+  }
+
+  button.tile:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+  }
+
+  .controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .controls button {
+    padding: 8px 16px;
+    border-radius: 999px;
+    border: none;
+    background: var(--accent);
+    color: var(--text);
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 150ms ease, filter 150ms ease;
+  }
+
+  .controls button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+
+  .controls button:active {
+    transform: translateY(1px);
+    filter: brightness(0.95);
+  }
